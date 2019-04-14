@@ -23,7 +23,7 @@
           -     echo "installing $2"
           -     source /app/bin/installer
           -     if [[ $? != 0 ]]; then
-          -         echo "Installation failed, abort."
+          -         echo "Installation failed, aborting."
           -         exit 1
           -     fi
           -     exit 0
