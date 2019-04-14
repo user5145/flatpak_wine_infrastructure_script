@@ -15,7 +15,8 @@
           -      The third parameter is a bash expression to extensions install scripts (e.g. /app/extensions/\*/bin/install.sh), they have to validate by themselves if they have to do something or not because they run on every startup \n
           -      The fourth parameter does basically what the third does, though it allows different extensions to coexist by executing the first script returned by bash (e.g. /app/extensions/*/bin/start.sh) after they were set up. It is for custom launchers \n
           -      \n
-          -      it's a script that runs extensions installers, stops if return value is different than 0 making it possible to stop the execution if necessary, allows for custom launchers and starts the main install script for your game. Basically can be used to not reimplement all the time the same code when experimenting with winepack and/or flatpak"
+          -      it's a script that runs extensions installers, stops if return value is different than 0 making it possible to stop the execution if necessary, allows for custom launchers and starts the main install script for your game. Basically can be used to not reimplement all the time the same code when experimenting with winepack and/or flatpak \n
+          -      example can be like that setup_infrastructure.sh \"${WINEPREFIX}/Game.exe\" \"/app/bin/installer\" \"/app/extensions/*/bin/installer\" \"/app/extensions/*/bin/starter\" "
           -
           - #install
           - if ! [ -e $1 ] ; then
