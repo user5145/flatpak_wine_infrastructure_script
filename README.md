@@ -1,2 +1,2 @@
-# flatpak_wine_infrrastructure_script
-code that i reuse building flatpaks with wine
+# flatpak_wine_infrastructure_script
+code that I use building flatpaks with wine
