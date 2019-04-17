@@ -20,12 +20,12 @@ setup_infrastructure.sh \"${WINEPREFIX}/Game.exe\" \"/app/bin/installer\" \"/app
 fi
 
 #install if file doesn't exist
-if ! [ -e $1 ] ; then
+if ! [ -e "$1" ] ; then
      echo "installing $2"
      source "$2"
      if [[ $? != 0 ]]; then
          echo "Installation failed, aborting."
-         exit 1
+         exit $?
      fi
 fi
 
