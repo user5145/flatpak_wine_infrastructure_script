@@ -1,4 +1,4 @@
-name: setup_infrastructure
+name: __setup_infrastructure
 buildsystem: simple
 build-commands:
 - mkdir -p /app/bin
