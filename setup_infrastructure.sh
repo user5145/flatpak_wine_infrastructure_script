@@ -3,7 +3,7 @@ set -e
 if [ -z "$4" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
         echo "
 this script tries to be helpful during wine setup inside flatpak.
-it runs extensions installers, stops if return value is different than 0 making it possible to stop the execution if necessary,
+it runs extensions installers, stops if return value is different than 0,
 allows for custom launchers and starts the main install script for your game. Basically can be used to not reimplement all the time the same code
 when experimenting with winepack and/or flatpak
         
