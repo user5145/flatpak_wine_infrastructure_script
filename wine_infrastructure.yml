@@ -1,9 +1,9 @@
-  - name: __setup_infrastructure
-    buildsystem: simple
-    build-commands:
-      - mkdir -p /app/bin
-      - install -Dm555 setup_infrastructure.sh /app/bin
-    sources:
-      - type: file
-        dest-filename: setup_infrastructure.sh
-        path: setup_infrsatructure.sh
+name: setup_infrastructure
+buildsystem: simple
+build-commands:
+- mkdir -p /app/bin
+- install -Dm555 setup_infrastructure.sh /app/bin
+sources:
+- type: file
+  dest-filename: setup_infrastructure.sh
+  path: setup_infrastructure.sh
