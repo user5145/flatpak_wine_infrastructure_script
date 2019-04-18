@@ -1,6 +1,5 @@
 #!/bin/bash
-set -e
-if [ -z "$4" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+if [[ -z "$4" || "$1" = "-h" || "$1" = "--help" ]] ; then
         echo "
 this script tries to be helpful during wine setup inside flatpak.
 it runs extensions installers, stops if return value is different than 0,
@@ -14,33 +13,34 @@ they have to validate by themselves if they have to do something or not because 
 The fourth parameter does basically what the third does, though it allows different extensions to coexist
 by executing the first script returned by bash (e.g. /app/extensions/*/bin/start.sh) after they were set up. It is for custom launchers
         
-example can be used like that 
+example can be like this
 setup_infrastructure.sh \"${WINEPREFIX}/Game.exe\" \"/app/bin/installer\" \"/app/extensions/*/bin/installer\" \"/app/extensions/*/bin/starter\" "
         exit 0
 fi
 
 #install if file doesn't exist
-if ! [ -e "$1" ] ; then
+if [[ ! -e "$1" ]]; then
      echo "installing $2"
      source "$2"
      if [[ $? != 0 ]]; then
-         echo "Installation failed, aborting."
-         exit $?
+         echo "Installation failed with code $?, aborting."
+         exit 1
      fi
 fi
 
 # install extensions
-# for every installer in extensions/*/bin test if any exists and run it
+# for every installer in /extensions/name/bin test if any exists and run it
 for f in $3 ; do
-      test -f "$f" && source "$f"
-      # close if the scripts request it
-      if [[ $? != 0 ]]; then
-           echo "error code $? forced the script to stop."
-           exit $?
-      fi
+     if [[ -f "$f" ]]; then
+         source "$f"
+         if [[ $? != 0 ]]; then
+             echo "error code $? forced the script to stop."
+             exit 1
+         fi
+     fi
 done
 
 # start extensions
 for f in $4 ; do
-      test -f "$f" && source "$f"
+     test -f "$f" && source "$f"
 done
