@@ -1,0 +1,43 @@
+"./wine_infrastructure.yml"
+
+name: __setup
+buildsystem: simple
+build-commands:
+- mkdir -p /app/bin
+- install -Dm555 start.sh /app/bin
+- install -Dm555 installer.sh /app/bin
+- install -Dm555 check_compat.sh /app/bin
+
+sources:
+- type: script
+  dest-filename: installer.sh
+  commands:
+  - mkdir -p ${WINEPREFIX}
+  - test -f /app/bin/tweaks.sh $$ tweaks.sh
+  -
+  - if ${INSTALLATOR_FROM_ZENITY}; then
+  -   INSTALLATOR_PATH="$(zenity --file-selection --title='${ZENITY_SELECET_MESSAGE}')"
+  - fi
+  -
+  - wine "${INSTALLATOR_PATH}"
+  - exit 0
+
+- type: script
+  dest-filename: start.sh
+  commands:
+  - #install
+  - source setup_infrastructure.sh -r "check_compat.sh" -e "/app/extension/*/bin/install.sh" -s "/app/extension/*/bin/start.sh" "${WINEPREFIX}/drive_c/${GAME_PATH}" "installer.sh"
+  -
+  - echo "launching ${FLATPAK_ID}"
+  - wine "C:/${GAME_PATH}" "$@"
+
+- type: script
+  dest-filename: check_compat.sh
+  commands:
+  - grep "${REQUIREMENTS}" /proc/cpuinfo > /dev/null
+  - if [[ $? != 0 ]]; then
+  -   zenity --question --title="${FLATPAK_ID} Warning" --text "${SEARCH_FOR_SUPPORT}" --ok-label="Continue" --cancel-label="Cancel"
+  -   if [[ "$?" != 0 ]]; then
+  -       exit
+  -   fi
+  - fi
