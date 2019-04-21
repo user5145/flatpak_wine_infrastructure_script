@@ -32,7 +32,7 @@ sources:
 - type: script
   dest-filename: check_compat.sh
   commands:
-  - grep "${SEARCH_FOR_SUPPORT}" /proc/cpuinfo > /dev/null
+  - grep "${SEARCH_SUPPORT_FOR}" /proc/cpuinfo > /dev/null
   - if [[ $? != 0 ]]; then
   -   zenity --question --title="${FLATPAK_ID} Warning" --text "${SUPPORT_ERROR}" --ok-label="Continue" --cancel-label="Cancel"
   -   if [[ "$?" != 0 ]]; then
