@@ -55,7 +55,7 @@ execute() {
 
   # install if file doesn't exist
   if [[ ! -e ${__INSTALL_IF_DOESNT_EXIST} ]]; then
-    echo "installing ${__INSTALL_SCRIPT}"
+    echo "${__INSTALL_SCRIPT} is isntalling ${FLATPAK_ID}"
     source "${__INSTALL_SCRIPT}"
     if [[ $? != 0 ]]; then
       echo "${__INSTALL_SCRIPT} failed with code $?, aborting."

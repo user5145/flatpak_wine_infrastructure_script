@@ -1,5 +1,3 @@
-"./wine_infrastructure.yml"
-
 name: __setup
 buildsystem: simple
 build-commands:
@@ -13,10 +11,10 @@ sources:
   dest-filename: installer.sh
   commands:
   - mkdir -p ${WINEPREFIX}
-  - test -f /app/bin/tweaks.sh $$ tweaks.sh
+  - test -f /app/bin/tweaks.sh && tweaks.sh
   -
   - if ${INSTALLATOR_FROM_ZENITY}; then
-  -   INSTALLATOR_PATH="$(zenity --file-selection --title='${ZENITY_SELECET_MESSAGE}')"
+  -   INSTALLATOR_PATH="$(zenity --file-selection --title=${ZENITY_SELECET_MESSAGE})" || exit 1
   - fi
   -
   - wine "${INSTALLATOR_PATH}"
@@ -26,7 +24,7 @@ sources:
   dest-filename: start.sh
   commands:
   - #install
-  - source setup_infrastructure.sh -r "check_compat.sh" -e "/app/extension/*/bin/install.sh" -s "/app/extension/*/bin/start.sh" "${WINEPREFIX}/drive_c/${GAME_PATH}" "installer.sh"
+  - source setup_infrastructure.sh -r "check_compat.sh" -e "/app/extension/*/bin/install.sh" -s "/app/extension/*/bin/start.sh" "${WINEPREFIX}/drive_c/${GAME_FILE}" "installer.sh"
   -
   - echo "launching ${FLATPAK_ID}"
   - wine "C:/${GAME_PATH}" "$@"
@@ -34,9 +32,9 @@ sources:
 - type: script
   dest-filename: check_compat.sh
   commands:
-  - grep "${REQUIREMENTS}" /proc/cpuinfo > /dev/null
+  - grep "${SEARCH_FOR_SUPPORT}" /proc/cpuinfo > /dev/null
   - if [[ $? != 0 ]]; then
-  -   zenity --question --title="${FLATPAK_ID} Warning" --text "${SEARCH_FOR_SUPPORT}" --ok-label="Continue" --cancel-label="Cancel"
+  -   zenity --question --title="${FLATPAK_ID} Warning" --text "${SUPPORT_ERROR}" --ok-label="Continue" --cancel-label="Cancel"
   -   if [[ "$?" != 0 ]]; then
   -       exit
   -   fi
