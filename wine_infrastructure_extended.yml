@@ -14,7 +14,7 @@ sources:
   - test -f /app/bin/tweaks.sh && tweaks.sh
   -
   - if ${INSTALLATOR_FROM_ZENITY}; then
-  -   INSTALLATOR_PATH="$(zenity --file-selection --title=${ZENITY_SELECT_MESSAGE})" || exit 1
+  -   INSTALLATOR_PATH=$(zenity --file-selection --title="${ZENITY_SELECT_MESSAGE}") || exit 1
   - fi
   -
   - wine "${INSTALLATOR_PATH}"
